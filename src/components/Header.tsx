@@ -6,7 +6,7 @@ const Header: React.FC = () => {
     <header className="bg-black border-b border-gray-800 px-6 py-4">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center space-x-8">
-          <div className="text-2xl font-bold text-orange-500">Sandesh Tv</div>
+          <div className="text-2xl font-bold text-orange-500">Tanu Tv</div>
           <nav className="hidden md:flex items-center space-x-6">
             <button className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors">
               <Home size={18} />
