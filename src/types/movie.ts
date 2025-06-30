@@ -1,5 +1,5 @@
 export interface Movie {
-  id: number;
+  id: number | string;
   title: string;
   description: string;
   poster: string;
@@ -16,14 +16,21 @@ export interface Movie {
   overview?: string;
   poster_path?: string;
   backdrop_path?: string;
+  original_title?: string;
+  casts?: CastMember[];
+  movie_id?: number;
 }
 
 export interface CastMember {
+  id?: string;
   name: string;
   character: string;
   profile_picture: string;
   // Add optional fields for different API structures
   profile_path?: string;
+  original_name?: string;
+  popularity?: string;
+  movie_id?: number;
 }
 
 export interface ApiResponse {
