@@ -16,7 +16,8 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const rating = movie.rating || movie.vote_average || 0;
   const genres = movie.genre || movie.genres || [];
   const description = movie.description || movie.overview || 'No description available.';
-  const cast = movie.cast || [];
+  const cast = movie.cast || movie.casts || [];
+  const title = movie.title || movie.original_title || 'Unknown Title';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -41,7 +42,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
           <div className="lg:w-1/3 flex-shrink-0">
             <img
               src={posterUrl}
-              alt={movie.title}
+              alt={title}
               className="w-full h-64 lg:h-full object-cover lg:rounded-l-xl"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
@@ -54,7 +55,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
           <div className="flex-1 p-6 lg:p-8">
             {/* Title and basic info */}
             <div className="mb-6">
-              <h1 className="text-3xl font-bold text-white mb-2">{movie.title}</h1>
+              <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
               <div className="flex flex-wrap items-center gap-4 text-gray-300 text-sm">
                 {movie.year && (
                   <div className="flex items-center space-x-1">
@@ -113,9 +114,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             {cast.length > 0 && (
               <div>
                 <h2 className="text-xl font-semibold text-white mb-4">Cast</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {cast.map((actor, index) => (
-                    <div key={index} className="text-center">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                  {cast.slice(0, 12).map((actor, index) => (
+                    <div key={actor.id || index} className="text-center">
                       <div className="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden bg-gray-700">
                         <img
                           src={actor.profile_picture || actor.profile_path || 'https://via.placeholder.com/64x64?text=No+Image'}
@@ -128,15 +129,22 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                           }}
                         />
                       </div>
-                      <div className="text-white text-sm font-medium mb-1 line-clamp-1">
+                      <div className="text-white text-sm font-medium mb-1 line-clamp-1" title={actor.name}>
                         {actor.name}
                       </div>
-                      <div className="text-gray-400 text-xs line-clamp-1">
+                      <div className="text-gray-400 text-xs line-clamp-1" title={actor.character}>
                         {actor.character}
                       </div>
                     </div>
                   ))}
                 </div>
+                {cast.length > 12 && (
+                  <div className="text-center mt-4">
+                    <span className="text-gray-400 text-sm">
+                      And {cast.length - 12} more cast members...
+                    </span>
+                  </div>
+                )}
               </div>
             )}
           </div>
